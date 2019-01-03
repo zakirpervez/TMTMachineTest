@@ -74,8 +74,6 @@ android {
             }
         }
     }
-
-
 }
 
 dependencies {
@@ -90,6 +88,10 @@ dependencies {
 
     implementation "com.android.support:recyclerview-v7:$rootProject.ext.appCompat"
     implementation "com.android.support:design:$rootProject.ext.appCompat"
+
+    implementation "android.arch.lifecycle:extensions:$rootProject.ext.components"
+
+    implementation "com.yanzhenjie:permission:$rootProject.ext.permission"
 
     //    leakcanary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanary"

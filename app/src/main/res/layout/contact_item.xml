@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:padding="@dimen/contactRootPadding">
+
+
+    <android.support.constraint.Guideline
+            android:id="@+id/imgStartGl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05"/>
+
+    <android.support.constraint.Guideline
+            android:id="@+id/imgEndGl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25"/>
+
+    <ImageView
+            android:id="@+id/contactIv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/contactImageStartMargin"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imgStartGl"
+            app:layout_constraintEnd_toEndOf="@+id/imgEndGl"
+            android:contentDescription="@string/contactImgDes"
+
+            app:layout_constraintDimensionRatio="H,1:1"
+    />
+
+    <TextView
+            android:id="@+id/nameText"
+            style="@style/ContactItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:font="@font/ptf76f"
+            tools:targetApi="26"
+            android:layout_marginStart="@dimen/contactImageStartMargin"
+            app:layout_constraintTop_toTopOf="@+id/contactIv"
+            app:layout_constraintStart_toEndOf="@+id/contactIv"/>
+
+    <TextView
+            android:id="@+id/mobileNumberText"
+            style="@style/ContactItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:font="@font/ptf76f"
+            tools:targetApi="26"
+            app:layout_constraintStart_toStartOf="@+id/nameText"
+            app:layout_constraintTop_toBottomOf="@+id/nameText"/>
+
+</android.support.constraint.ConstraintLayout>

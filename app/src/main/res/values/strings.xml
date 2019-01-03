@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tmt Machine Test</string>
+    <string name="contactImgDes">Represents contact image</string>
 </resources>

@@ -31,4 +31,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ContactItemText" parent="TextAppearance.AppCompat">
+        <item name="android:font"
+              tools:targetApi="26">@font/ptf56f
+        </item>
+        <item name="android:textSize">@dimen/contactNameTextSize</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

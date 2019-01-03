@@ -40,6 +40,9 @@ ext{
     runner = "1.0.2"
     espresso = "3.0.2"
 
+    components = "1.1.1"
+    permission = "2.0.0-rc12"
+
 
 //    debug dependencies
     leakcanary = "1.6.2"

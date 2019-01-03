@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="splashTextSize">30sp</dimen>
+    <dimen name="contactImageStartMargin">10dp</dimen>
+    <dimen name="contactNameTextSize">16sp</dimen>
+    <dimen name="contactRootPadding">10dp</dimen>
 </resources>
