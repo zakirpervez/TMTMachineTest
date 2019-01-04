@@ -3,4 +3,6 @@
     <string name="contactImgDes">Represents contact image</string>
     <string name="loading">Loading...</string>
     <string name="noContactFound">Sorry No Contact Found</string>
+    <string name="sendSms">Send SMS</string>
+    <string name="smsErrorMessage">Please enter some text</string>
 </resources>

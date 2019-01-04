@@ -1,5 +1,6 @@
 package com.tmt.tmtmachinetest.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
@@ -11,9 +12,13 @@ import com.tmt.tmtmachinetest.pojo.ContactEntity
 
 const val ONE_SEC: Long = 1000
 
-
 interface ContactCallback {
     fun contactFetch(contacts: ArrayList<ContactEntity>)
+}
+
+interface SMSCallback {
+    fun sendSms(mobile: String, text: String)
+    fun receiveSms(mobile: String, text:String)
 }
 
 open class ContactUtility(private val from: Activity, private val callback: ContactCallback) : LifecycleObserver {
@@ -23,6 +28,7 @@ open class ContactUtility(private val from: Activity, private val callback: Cont
     private lateinit var cursor: Cursor
     private val contacts: ArrayList<ContactEntity> = ArrayList()
 
+    @SuppressLint("Recycle")
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchContact() {
         cursor = from.contentResolver.query(
@@ -36,25 +42,23 @@ open class ContactUtility(private val from: Activity, private val callback: Cont
         if (cursor.count > 0) {
             cursor.moveToFirst()
             do {
-                val _id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+                val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
                 val name: String = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                val mobileCursor = from.contentResolver.query(
+                val mobileCursor: Cursor = from.contentResolver.query(
                     phoneContentUri,
                     null,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = $_id",
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = $id",
                     null,
                     null
-                )
+                )!!
 
-                var mobile: String = "NONE"
+                var mobile = "NONE"
                 if (mobileCursor.count > 0) {
                     mobileCursor.moveToFirst()
                     mobile =
                             mobileCursor.getString(mobileCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                     mobileCursor.close()
                 }
-
-
                 contacts.add(ContactEntity(Uri.parse(""), name, mobile))
             } while (cursor.moveToNext())
 

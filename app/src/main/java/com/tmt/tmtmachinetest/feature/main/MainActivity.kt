@@ -1,31 +1,39 @@
 package com.tmt.tmtmachinetest.feature.main
 
+import android.app.PendingIntent
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LifecycleRegistry
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.telephony.SmsManager
 import android.view.MenuItem
 import android.view.View
 import com.tmt.tmtmachinetest.R
+import com.tmt.tmtmachinetest.broadcasts.SmsDeliveredBroadcastReceiver
+import com.tmt.tmtmachinetest.broadcasts.SmsListenerBroadcastReceiver
+import com.tmt.tmtmachinetest.broadcasts.SmsSentBroadcastReceiver
 import com.tmt.tmtmachinetest.feature.BaseActivity
 import com.tmt.tmtmachinetest.feature.main.adapter.ContactAdapter
 import com.tmt.tmtmachinetest.pojo.ContactEntity
-import com.tmt.tmtmachinetest.util.ContactCallback
-import com.tmt.tmtmachinetest.util.ContactUtility
-import com.tmt.tmtmachinetest.util.TmtProgress
+import com.tmt.tmtmachinetest.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(), ContactCallback, LifecycleOwner {
+private const val delivered = "SMS DELIVERED"
+private const val sent = "SMS SENT"
+private const val receive = "SMS RECEIVE"
 
+class MainActivity : BaseActivity(), ContactCallback, LifecycleOwner, SMSCallback {
 
     private lateinit var contactUtility: ContactUtility
     private lateinit var lifecycleRegistry: LifecycleRegistry
     private lateinit var tmtProgress: TmtProgress
-    private val contactAdapter = ContactAdapter()
+    private lateinit var contactAdapter: ContactAdapter
+    private lateinit var smsListenerBroadcastReceiver: SmsListenerBroadcastReceiver
 
     companion object {
         fun start(from: AppCompatActivity) {
@@ -45,6 +53,14 @@ class MainActivity : BaseActivity(), ContactCallback, LifecycleOwner {
     }
 
 
+    override fun onStop() {
+        unregisterReceiver(SmsSentBroadcastReceiver)
+        unregisterReceiver(SmsDeliveredBroadcastReceiver)
+        unregisterReceiver(smsListenerBroadcastReceiver)
+        super.onStop()
+    }
+
+
     override fun getLifecycle(): Lifecycle {
         return lifecycleRegistry
     }
@@ -53,12 +69,17 @@ class MainActivity : BaseActivity(), ContactCallback, LifecycleOwner {
         tmtProgress = TmtProgress(this)
         setToolbar("Home")
         tmtProgress.show()
-
+        contactAdapter = ContactAdapter(this)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val itemDecorator = DividerItemDecoration(this, layoutManager.orientation)
         contactRv.layoutManager = layoutManager
         contactRv.addItemDecoration(itemDecorator)
         contactRv.adapter = contactAdapter
+        smsListenerBroadcastReceiver = SmsListenerBroadcastReceiver(this)
+
+        registerReceiver(SmsSentBroadcastReceiver, IntentFilter(delivered))
+        registerReceiver(SmsDeliveredBroadcastReceiver, IntentFilter(sent))
+        registerReceiver(smsListenerBroadcastReceiver, IntentFilter(receive))
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -78,5 +99,18 @@ class MainActivity : BaseActivity(), ContactCallback, LifecycleOwner {
             noContactText.visibility = View.VISIBLE
         }
         tmtProgress.dismiss()
+    }
+
+    override fun sendSms(mobile: String, text: String) {
+        val smsManager: SmsManager = SmsManager.getDefault()
+
+        val piSend = PendingIntent.getBroadcast(this, 0, Intent(sent), 0)
+        val piDelivered = PendingIntent.getBroadcast(this, 0, Intent(delivered), 0)
+
+        smsManager.sendTextMessage(mobile, null, text, piSend, piDelivered)
+    }
+
+    override fun receiveSms(mobile: String, text: String) {
+        showToast("$mobile : $text")
     }
 }

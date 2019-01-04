@@ -57,4 +57,23 @@
             app:layout_constraintStart_toStartOf="@+id/nameText"
             app:layout_constraintTop_toBottomOf="@+id/nameText"/>
 
+    <Button
+            android:id="@+id/sendSmsBt"
+            style="@style/SMSButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sendSms"
+            android:fontFamily="@font/ptz56f"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+            android:id="@+id/smsTextEd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/contactIv"
+            app:layout_constraintEnd_toStartOf="@+id/sendSmsBt"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

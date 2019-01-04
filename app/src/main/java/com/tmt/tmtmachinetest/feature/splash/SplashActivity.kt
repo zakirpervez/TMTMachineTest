@@ -36,15 +36,22 @@ class SplashActivity : BaseActivity() {
 
             }
         })
+
+        rotateAnimation.start()
     }
 
     private fun askPermission() {
         AndPermission
             .with(this)
             .runtime()
-            .permission(Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS)
+            .permission(
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.READ_SMS
+            )
             .onGranted { permissions ->
-                if (permissions.size == 2) {
+                if (permissions.size == 4) {
                     initialize()
                 } else {
                     askPermission()
