@@ -4,4 +4,7 @@
     <dimen name="contactImageStartMargin">10dp</dimen>
     <dimen name="contactNameTextSize">16sp</dimen>
     <dimen name="contactRootPadding">10dp</dimen>
+    <dimen name="loadingTextBottomMargin">8dp</dimen>
+    <dimen name="loadingTextTopMargin">10dp</dimen>
+    <dimen name="alertDialogPadding">10dp</dimen>
 </resources>

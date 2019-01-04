@@ -40,4 +40,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:padding">@dimen/alertDialogPadding</item>
+    </style>
+
 </resources>
