@@ -18,7 +18,7 @@ interface ContactCallback {
 
 interface SMSCallback {
     fun sendSms(mobile: String, text: String)
-    fun receiveSms(mobile: String, text:String)
+    fun receiveSms(mobile: String, text: String)
 }
 
 open class ContactUtility(private val from: Activity, private val callback: ContactCallback) : LifecycleObserver {
@@ -43,7 +43,8 @@ open class ContactUtility(private val from: Activity, private val callback: Cont
             cursor.moveToFirst()
             do {
                 val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-                val name: String = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                val name: String =
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)) ?: "Null"
                 val mobileCursor: Cursor = from.contentResolver.query(
                     phoneContentUri,
                     null,

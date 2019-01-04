@@ -23,9 +23,9 @@ import com.tmt.tmtmachinetest.pojo.ContactEntity
 import com.tmt.tmtmachinetest.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-private const val delivered = "SMS DELIVERED"
-private const val sent = "SMS SENT"
-private const val receive = "SMS RECEIVE"
+private const val delivered = "DELIVERED"
+private const val sent = "SENT"
+private const val receive = "RECEIVE"
 
 class MainActivity : BaseActivity(), ContactCallback, LifecycleOwner, SMSCallback {
 
